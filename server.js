@@ -1,0 +1,22 @@
+'use strict'
+//application setup
+var express = require('express');
+var path = require('path');
+var app = express();
+var port = 3000;
+
+//view setup
+app.set('views', path.join(__dirname, 'views'));
+
+//view engine setup
+app.set('view engine', 'jade');
+
+//get request
+app.get('/', function(req,res){
+  res.render('index');
+});
+
+//app listener
+app.listen(port, function(){
+  console.log('server running on ' + port);
+});
