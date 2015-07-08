@@ -2,12 +2,12 @@ doctype html
 html
   head
     title Dexter's VLOG page
+    link(rel="stylesheet", type="text/css", href="css/base.css")
   body
     header
       section
         a
           img(src="http://i.imgur.com/u3lmGxb.png")
-          p Dexter
         a About Dexter
         a Courses Teaching
         a Projects
@@ -15,9 +15,10 @@ html
     main
       h1 Welcome to my Vlog
       h2 Nerd City, USA
-
-    p Front-End Development Accelerator currently in session
-    iframe(src="https://www.youtube.com/embed/fNtDGQCvKgA" frameborder="0" allowfullscreen>)
-    iframe(src="https://www.youtube.com/embed/9cMuV31bsbw" frameborder="0" allowfullscreen>)
+      article.container
+        iframe(width="425", height="350", src="https://www.youtube.com/embed/fNtDGQCvKgA" )
+      article.container
+        iframe(width="425", height="350", src="https://www.youtube.com/embed/9cMuV31bsbw" )
   footer
     p &copy 2015 Dexter's Vlog
+

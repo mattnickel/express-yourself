@@ -5,6 +5,7 @@ var path = require('path');
 var app = express();
 var port = 3000;
 
+app.use(express.static(path.join(__dirname, '/public')));
 //view setup
 app.set('views', path.join(__dirname, 'views'));
 
