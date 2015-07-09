@@ -2,9 +2,9 @@
 //application setup
 var express = require('express');
 var path = require('path');
-var app = express();
-var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var app = express();
 var port = 3000;
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -14,7 +14,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 //view setup
 app.set('views', path.join(__dirname, 'views'));
-
 
 var articleSchema= mongoose.Schema ({
   title: String,
@@ -35,17 +34,17 @@ app.post('/articles', function(req,res){
   console.log(req.body);
   var postArticleData = JSON.parse(JSON.stringify(req.body));
   var postArticle = new article(postArticleData);
+  console.log(postArticle);
+  console.log(postArticleData);
   postArticle.save(function(err,postArticle){
     if (err){
-      console.log("Bummer")
+      console.log("Bummer");
     }else {
       console.log("Cool");
-      res.json(postArticle);
+      article.find(function(err,article) {
+        res.json(article);
+      });
     }
-  });
-
-  article.find(function(err,article) {
-    res.json(article);
   });
 });
 
