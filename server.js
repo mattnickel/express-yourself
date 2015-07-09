@@ -6,6 +6,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var port = 3000;
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/blogs')
 app.use(bodyParser.json());
@@ -58,12 +60,26 @@ app.delete('/articles:article_id', function(req,res){
 //view engine setup
 app.set('view engine', 'jade');
 
-//get request
-app.get('/', function(req,res){
-  res.render('index');
+app.post('/index', function(req,res){
+  console.log(req.body);
+  res.json(req.body);
 });
 
-//app listener
+app.get('/index',function(req,res){
+  var title = ["one","two"];
+  res.json(title);
+  console.log(title);
+});
+app.delete('/index',function(req,res){
+  req.body.remove;
+  res.json("That sucker has been destroyed");
+});
+app.put('/index',function(req,res){
+  req.body.find;
+  req.body.remove;
+  req.body.save;
+  res.json("Changed");
+});
 app.listen(port, function(){
   console.log('server running on ' + port);
 });

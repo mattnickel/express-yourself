@@ -13,6 +13,16 @@ html
         a Projects
         a More
     main
+      section.postEntry
+        section
+          label Title:
+            input#POST-title(type="text" name="title")
+          label Blog Content:
+          textarea#POST-blog(type="textarea" name="blog")
+          input#btn(type="submit" value="Post")
+      h1Recent Posts
+        section#newBlog.newBlog
+
       h1 Welcome to my Vlog
       h2 Nerd City, USA
       article.container
@@ -21,4 +31,5 @@ html
         iframe(width="425", height="350", src="https://www.youtube.com/embed/9cMuV31bsbw" )
   footer
     p &copy 2015 Dexter's Vlog
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
 
