@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 var articleSchema= mongoose.Schema ({
   title: String,
-  blog: String
+  blog: String,
 });
 
 var article = mongoose.model('article',articleSchema);
@@ -35,15 +35,11 @@ app.post('/articles', function(req,res){
   var postArticle = new article(postArticleData);
   postArticle.save(function(err,postArticle){
     if (err){
-      console.log("Bummer")
+      console.log("Bummer");
     }else {
       console.log("Cool");
       res.json(postArticle);
     }
-  });
-
-  article.find(function(err,article) {
-    res.json(article);
   });
 });
 
@@ -62,7 +58,6 @@ app.set('view engine', 'jade');
 app.get('/', function(req,res){
   res.render('index');
 });
-
 //app listener
 app.listen(port, function(){
   console.log('server running on ' + port);
