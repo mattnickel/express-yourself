@@ -7,38 +7,50 @@ var bodyParser = require('body-parser');
 var app = express();
 var port = 3000;
 
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/blogs')
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 //view setup
 app.set('views', path.join(__dirname, 'views'));
 
-var articleSchema = mongoose.Schema({
-  title : String,
-  blog : String
+var articleSchema= mongoose.Schema ({
+  title: String,
+  blog: String
 });
-var article = mongoose.model('article', articleSchema);
 
-app.get('/articles',function(req,res){
-  mongoose.model('article').find(function(err,users){
-    res.send(article);
-    console.log(article);
+var article = mongoose.model('article',articleSchema);
+
+//article get & post & delete
+app.get('/articles', function(req,res){
+  article.find(function(err,article) {
+    res.json(article);
   });
 });
-app.post('/articles',function(req,res){
-  article.create({
-    title : req.body.text,
-    blog :req.body.text,
-    done : false
-  },function(err,article){
-    article.find(function(err,article){
-      res.json(article);
-    });
+
+app.post('/articles', function(req,res){
+  console.log("Inside Post");
+  console.log(req.body);
+  var postArticleData = JSON.parse(JSON.stringify(req.body));
+  var postArticle = new article(postArticleData);
+  console.log(postArticle);
+  console.log(postArticleData);
+  postArticle.save(function(err,postArticle){
+    if (err){
+      console.log("Bummer");
+    }else {
+      console.log("Cool");
+      article.find(function(err,article) {
+        res.json(article);
+      });
+    }
   });
 });
-app.delete('/articles:article_id',function(req,res){
+
+app.delete('/articles:article_id', function(req,res){
   article.remove({
     _id : req.params.article_id
   });
-  article.find(function(err,article){
+  article.find(function(err,article) {
     res.json(article);
   });
 });
