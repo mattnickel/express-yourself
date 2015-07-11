@@ -54,6 +54,24 @@ app.delete('/articles:article_id', function(req,res){
     res.json(article);
   });
 });
+
+app.put('/articles:article_id', function(req,res){
+  article.find(req.params.article_id, function(err, article) {
+    article.title = req.body.title;
+    article.blog = req.body.blog;
+    console.log(article.title = req.body.title); //it works but doesn't save
+    console.log("this is inside blog"+ article.blog);//works but doesn't save
+    article.save(function(err,postArticle){
+      if(err){
+        console.log(err);
+      } else {
+        article.find(function(err,article) {
+          res.json(article);
+          });
+        }
+      });
+  });
+});
 //view engine setup
 app.set('view engine', 'jade');
 
