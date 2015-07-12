@@ -21,7 +21,7 @@ var articleSchema= mongoose.Schema ({
 
 var article = mongoose.model('article',articleSchema);
 
-//article get & post & delete
+//article get & post & delete & put
 app.get('/articles', function(req,res){
   article.find(function(err,article) {
     res.json(article);
@@ -37,20 +37,52 @@ app.post('/articles', function(req,res){
     if (err){
       console.log("Bummer");
     }else {
-      console.log("Cool");
-      res.json(postArticle);
+      console.log("Posted");
+      article.find(function(err, article){
+        res.json(article);
+      });
     }
   });
 });
 
-app.delete('/articles:article_id', function(req,res){
-  article.remove({
-    _id : req.params.article_id
-  });
-  article.find(function(err,article) {
-    res.json(article);
+app.delete('/articles/:article_id',function(req,res){
+  console.log ("Inside Delete");
+  article.findByIdAndRemove(req.params.article_id, function(err) {
+    if (err){
+      res.send(err);
+      console.log ("broken");
+    }else {
+      res.json({ message: 'Article removed from the database!'
+      });
+    }
   });
 });
+
+app.put('/articles/:article_id', function(req,res){
+  console.log("Inside PUT");
+  article.findById(req.params.article_id, function (err, article) {
+    if (err){
+      console.log ("broken Find");
+      res.send(err);
+    }else {
+      console.log("Article Found");
+      res.json({ message: 'Article Found'});
+      article.title = req.body.title;
+      article.blog = req.body.blog;
+      console.log("Still ok");
+      article.save(function(err){
+        if (err) {
+          res.send(err);
+          console.log ("Yikes:save error")
+        }else {
+          console.log("Saved!");
+          res.json(article);
+        }
+      });
+    }
+  });
+});
+
 //view engine setup
 app.set('view engine', 'jade');
 
