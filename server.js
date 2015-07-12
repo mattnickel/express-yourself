@@ -17,12 +17,12 @@ app.set('views', path.join(__dirname, 'views'));
 
 var articleSchema= mongoose.Schema ({
   title: String,
-  blog: String
+  blog: String,
 });
 
 var article = mongoose.model('article',articleSchema);
 
-//article get & post & delete
+//article get & post & delete & put
 app.get('/articles', function(req,res){
   article.find(function(err,article) {
     res.json(article);
@@ -40,22 +40,53 @@ app.post('/articles', function(req,res){
     if (err){
       console.log("Bummer");
     }else {
-      console.log("Cool");
-      article.find(function(err,article) {
+      console.log("Posted");
+      article.find(function(err, article){
         res.json(article);
       });
     }
   });
 });
 
-app.delete('/articles:article_id', function(req,res){
-  article.remove({
-    _id : req.params.article_id
+app.delete('/articles/:article_id',function(req,res){
+  console.log ("Inside Delete");
+  article.findByIdAndRemove(req.params.article_id, function(err) {
+    if (err){
+      res.send(err);
+      console.log ("broken");
+    }else {
+      res.json({ message: 'Article removed from the database!'
+      });
+    }
   });
-  article.find(function(err,article) {
-    res.json(article);
+
+});
+
+app.put('/articles/:article_id', function(req,res){
+  console.log("Inside PUT");
+  article.findById(req.params.article_id, function (err, article) {
+    if (err){
+      console.log ("broken Find");
+      res.send(err);
+    }else {
+      console.log("Article Found");
+      res.json({ message: 'Article Found'});
+      article.title = req.body.title;
+      article.blog = req.body.blog;
+      console.log("Still ok");
+      article.save(function(err){
+        if (err) {
+          res.send(err);
+          console.log ("Yikes:save error")
+        }else {
+          console.log("Saved!");
+          res.json(article);
+        }
+      });
+    }
   });
 });
+
 //view engine setup
 app.set('view engine', 'jade');
 
@@ -64,21 +95,6 @@ app.post('/index', function(req,res){
   res.json(req.body);
 });
 
-app.get('/index',function(req,res){
-  var title = ["one","two"];
-  res.json(title);
-  console.log(title);
-});
-app.delete('/index',function(req,res){
-  req.body.remove;
-  res.json("That sucker has been destroyed");
-});
-app.put('/index',function(req,res){
-  req.body.find;
-  req.body.remove;
-  req.body.save;
-  res.json("Changed");
-});
 app.listen(port, function(){
   console.log('server running on ' + port);
 });
