@@ -2,17 +2,18 @@
 //application setup
 var express = require('express');
 var path = require('path');
-var app = express();
-var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var app = express();
 var port = 3000;
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/blogs')
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 //view setup
 app.set('views', path.join(__dirname, 'views'));
-
 
 var articleSchema= mongoose.Schema ({
   title: String,
@@ -33,6 +34,8 @@ app.post('/articles', function(req,res){
   console.log(req.body);
   var postArticleData = JSON.parse(JSON.stringify(req.body));
   var postArticle = new article(postArticleData);
+  console.log(postArticle);
+  console.log(postArticleData);
   postArticle.save(function(err,postArticle){
     if (err){
       console.log("Bummer");
@@ -56,6 +59,7 @@ app.delete('/articles/:article_id',function(req,res){
       });
     }
   });
+
 });
 
 app.put('/articles/:article_id', function(req,res){
@@ -86,11 +90,11 @@ app.put('/articles/:article_id', function(req,res){
 //view engine setup
 app.set('view engine', 'jade');
 
-//get request
-app.get('/', function(req,res){
-  res.render('index');
+app.post('/index', function(req,res){
+  console.log(req.body);
+  res.json(req.body);
 });
-//app listener
+
 app.listen(port, function(){
   console.log('server running on ' + port);
 });
