@@ -46,32 +46,44 @@ app.post('/articles', function(req,res){
   });
 });
 
-app.delete('/articles:article_id', function(req,res){
-  article.remove({
-    _id : req.params.article_id
+app.delete('/articles/:article_id',function(req,res){
+ console.log ("Inside Delete");
+ article.findByIdAndRemove(req.params.article_id, function(err) {
+   if (err){
+     res.send(err);
+     console.log ("broken");
+   }else {
+     res.json({ message: 'Article removed from the database!'
+     });
+   }
+ });
+});
+app.put('/articles/:article_id',function(req,res){
+ article.findOne(req.params.article_id, function (err, article){
+   article.title = req.body.title;
+   article.blog = req.body.blog;
+   article.save();
   });
-  article.find(function(err,article) {
-    res.json(article);
-  });
+ article.find(function(err,article) {
+   res.json(article);
+ });
 });
 
-app.put('/articles:article_id', function(req,res){
-  article.find(req.params.article_id, function(err, article) {
-    article.title = req.body.title;
-    article.blog = req.body.blog;
-    console.log(article.title = req.body.title); //it works but doesn't save
-    console.log("this is inside blog"+ article.blog);//works but doesn't save
-    article.save(function(err,postArticle){
-      if(err){
-        console.log(err);
-      } else {
-        article.find(function(err,article) {
-          res.json(article);
-          });
-        }
-      });
-  });
-});
+// app.put('/articles:article_id', function(req,res){
+//   article.findById(req.params.article_id, function(err, article) {
+//     article.title = req.body.title;
+//     article.blog = req.body.blog;
+//     console.log(article.title = req.body.title); //it works but doesn't save
+//     console.log("this is inside blog"+ article.blog);//works but doesn't save
+//     article.save(function(err) {
+//       if (err)
+//         res.send(err);
+//         res.json({ message: 'article updated!' });
+//     });
+//   });
+// });
+
+
 //view engine setup
 app.set('view engine', 'jade');
 
