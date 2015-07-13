@@ -1,6 +1,6 @@
 'use strict';
 
-var article = require('../models/model.js');
+var article = require('models/model.js');
 var bodyParser = require('body-parser');
 
 app.get('/articles', function(req,res){
