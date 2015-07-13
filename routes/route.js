@@ -1,62 +1,66 @@
-'use strict';
+'use strict'
 
-var article = require('models/model.js');
+var article = require('../models/model.js');
 var bodyParser = require('body-parser');
+//var express = require('express');
+//var app = express();
 
-app.get('/articles', function(req,res){
-  console.log("test");
-  article.find(function(err,article) {
-    res.json(article);
-  });
-});
+module.exports = function(app) {
+  app.use(bodyParser.json());
 
-app.post('/articles', function(req,res){
-  console.log("Inside Post");
-  console.log(req.body);
-  var postArticleData = JSON.parse(JSON.stringify(req.body));
-  var postArticle = new article(postArticleData);
-  console.log(postArticle);
-  console.log(postArticleData);
-  postArticle.save(function(err,postArticle){
-    if (err){
-      console.log("Bummer");
-    }else {
-      console.log("Cool");
-      article.find(function(err,article) {
+  // app.post('/articles', function(req,res){
+  //   console.log(req.body);
+  //   res.json(req.body);
+  // });
+
+  app.get('/articles', function(req,res){
+    article.find({},function(err,article) {
+      if (err){
+        console.log("Not Getting Anywhere");
+      }else {
         res.json(article);
-      });
-    }
+      }
+    });
   });
-});
 
-app.delete('/articles/:article_id',function(req,res){
- console.log ("Inside Delete");
- article.findByIdAndRemove(req.params.article_id, function(err) {
-   if (err){
-     res.send(err);
-     console.log ("broken");
-   }else {
-     res.json({ message: 'Article removed from the database!'
-     });
-   }
- });
-});
-app.put('/articles/:article_id',function(req,res){
- article.findOne(req.params.article_id, function (err, article){
-   article.title = req.body.title;
-   article.blog = req.body.blog;
-   article.save();
+  app.post('/articles', function(req,res){
+    var postArticleData = JSON.parse(JSON.stringify(req.body));
+    var postArticle = new article(postArticleData);
+    postArticle.save(function(err,postArticle){
+      if (err){
+        console.log("Not Posted");
+      }else {
+        console.log("Posted");
+        article.find(function(err, article){
+          if (err){
+            console.log("Couldn't find any articles");
+          }else {
+            res.json(article);
+          }
+        });
+      }
+    });
   });
- article.find(function(err,article) {
-   res.json(article);
- });
-});
-//view setup
-app.set('views', path.join(__dirname, 'views'));
-//view engine setup
-app.set('view engine', 'jade');
+  app.delete('/articles/:article_id',function(req,res){
+    article.findByIdAndRemove(req.params.article_id, function(err) {
+      if (err){
+        res.send(err);
+        console.log ("Not Deleted");
+      }else {
+        res.json({ message: 'Article removed from the database!'
+        });
+      }
+    });
+  });
 
-//get request
-app.get('/', function(req,res){
-  res.render('index');
-});
+  app.put('/articles/:article_id',function(req,res){
+   article.findOne(req.params.article_id, function (err, article){
+     article.title = req.body.title;
+     article.blog = req.body.blog;
+     article.save();
+    });
+   article.find(function(err,article) {
+     res.json(article);
+   });
+  });
+}
