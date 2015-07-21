@@ -2,16 +2,9 @@
 
 var article = require('../models/model.js');
 var bodyParser = require('body-parser');
-//var express = require('express');
-//var app = express();
 
 module.exports = function(app) {
   app.use(bodyParser.json());
-
-  // app.post('/articles', function(req,res){
-  //   console.log(req.body);
-  //   res.json(req.body);
-  // });
 
   app.get('/articles', function(req,res){
     article.find({},function(err,article) {

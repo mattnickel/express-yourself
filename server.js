@@ -3,7 +3,6 @@
 var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
-//var models = require('./models/model.js');
 var app = express();
 var port = 3000;
 
