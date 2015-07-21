@@ -6,8 +6,10 @@ var mongoose = require('mongoose');
 var app = express();
 var port = 3000;
 var routes = require('./routes/routes');
+var jade = require('jade');
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/blogs');
+
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/blog');
 
 app.use(express.static(path.join(__dirname, '/public')));
 //view setup
@@ -22,3 +24,4 @@ app.set('view engine', 'jade');
 app.listen(port, function(){
   console.log('server running on ' + port);
 });
+
