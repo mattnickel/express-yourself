@@ -1,0 +1,44 @@
+$primary-color1: #333;
+$primary-color2: white;
+$primary-color3: #b6412d;
+$font-stack: Helvetica;
+$full: 100%;
+
+header{
+  background-color: $primary-color1;
+  color: $primary-color2;
+  text-transform: uppercase;
+  padding: 2%;
+  a {
+  padding: 2%;
+  }
+  a:hover{
+  color:$primary-color3;
+  }
+}
+body{
+  font: $font-stack;
+}
+main {
+  padding: 5%;
+  padding-top: 2%;
+}
+.container {
+  width: $full;
+  height: 500px;
+  overflow:auto;
+  position:relative;
+  overflow:visible;
+  margin:2%;
+}
+iframe {
+  width: $full;
+  height: $full;
+  position:absolute;
+}
+footer{
+  border-top: 1px black solid;
+  text-align: center;
+  padding:2%;
+}
+
