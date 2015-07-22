@@ -8,15 +8,31 @@
     <header>
       <section><a><img src="http://i.imgur.com/u3lmGxb.png"></a><a>About Dexter</a><a>Courses Teaching</a><a>Projects</a><a>More</a></section>
     </header>
-    <main>
-      <h1>Welcome to my Vlog</h1>
-      <h2>Nerd City, USA</h2>
-      <article class="container">
+    <main data-ng-controller="postingController">
+      <div data-ng-if="!setting.editing">
+        <section data-ng-repeat="setting in settings">
+          <article >
+            <h1>{{setting.title}}</h1>
+            <p>{{setting.blog}}</p>
+          </article>
+          <button class="btn-caution" data-ng-click="edit(setting)">Edit</button>
+          <button class="btn-alert" data-ng-click="destroy(setting._id)">Destroy</button>
+        </section>
+      </div>
+      <div class="setting-card" data-ng-if="setting.editing">
+        <article>
+          <h1 data-ng-model="setting.title"></h1>
+          <p data-ng-model="setting.body"></p>
+        </article>
+      </div>
+      <!-- <h1>Welcome to my Vlog</h1>
+      <h2>Nerd City, USA</h2> -->
+      <!-- <article class="container">
         <iframe width="425" height="350" src="https://www.youtube.com/embed/fNtDGQCvKgA"></iframe>
       </article>
       <article class="container">
         <iframe width="425" height="350" src="https://www.youtube.com/embed/9cMuV31bsbw"></iframe>
-      </article>
+      </article> -->
     </main>
   </body>
   <footer>
