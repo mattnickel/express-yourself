@@ -47,7 +47,8 @@ module.exports = function(app) {
   });
 
   app.put('/articles/:article_id',function(req,res){
-   article.findOne(req.params.article_id, function (err, article){
+    console.log(req.body);
+   article.findOne({_id : req.params.article_id} , function (err, article){
      article.title = req.body.title;
      article.blog = req.body.blog;
      article.save();

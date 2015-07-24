@@ -1,7 +1,8 @@
 'user strict';
 
 require('angular/angular');
+require('angular-route');
 
-var blogPosting = angular.module('blogPosting', []);
+var blogPosting = angular.module('blogPosting', ['ngRoute']);
 
-require("./BlogPost/blogPosting.js")(blogPosting);
+require("./BlogPost/postingController.js")(blogPosting);

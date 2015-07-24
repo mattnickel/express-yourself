@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="blogPosting">
   <head>
     <title>Dexter's VLOG page</title>
     <link rel="stylesheet" type="text/css" href="css/base.css">
@@ -9,22 +9,34 @@
       <section><a><img src="http://i.imgur.com/u3lmGxb.png"></a><a>About Dexter</a><a>Courses Teaching</a><a>Projects</a><a>More</a></section>
     </header>
     <main data-ng-controller="postingController">
+      <button class="btn-ok" data-ng-click="post.edit = true">New</button>
+      <form data-ng-submit="newArticle(post)" data-ng-if="!post.editing">
+        <label for="title">Title</label>
+        <input id="New_Title" type="text" data-ng-model="post.title">
+        <label for="blog">Blog</label>
+        <textarea id="New_Blog" type="text" data-ng-model="post.blog">
+        <button class="sumbit">Submit<button>
+      </form>
       <section data-ng-repeat="post in posts">
+      <div data-ng-if="post.editing">
+        <lablel for='title'>Title
+          <h1><input id="New_Title" type="text" data-ng-model="post.title"></h1>
+        </label>
+        <label for="blog">Blog
+          <p><textarea id="New_Blog" type="text" data-ng-model="post.blog"></p>
+        </label>
+        <button data-ng-click="post.editing = false">Cancel</button>
+        <button data-ng-click="update(post._id, post)">Save</button>
+      </div>
         <div data-ng-if="!post.editing">
           <article>
             <h1>{{post.title}}</h1>
             <p>{{post.blog}}</p>
           </article>
-          <button class="btn-caution" data-ng-click="edit(post)">Edit</button>
-          <button class="btn-alert" data-ng-click="destroy(post._id)">Destroy</button>
+          <button data-ng-click="edit(post)">Edit</button>
+          <button data-ng-click="destroy(post._id)">Destroy</button>
         </div>
       </section>
-      <div data-ng-if="post.editing">
-        <article>
-          <h1 data-ng-model="post.title"></h1>
-          <p data-ng-model="post.body"></p>
-        </article>
-      </div>
       <!-- <h1>Welcome to my Vlog</h1>
       <h2>Nerd City, USA</h2> -->
       <!-- <article class="container">

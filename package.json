@@ -4,12 +4,13 @@
   "description": "Class Assignment",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Matt & Andre",
   "license": "ISC",
   "dependencies": {
     "angular": "^1.4.3",
+    "angular-route": "^1.4.3",
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "jade": "^1.11.0",
