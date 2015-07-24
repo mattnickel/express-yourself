@@ -11,7 +11,7 @@ gulp.task('sass', function () {
   gulp.src('./app/scss/index.sass')
     .pipe(sass().on('error', sass.logError))
     .pipe(minifyCss({compatibility: 'ie8'}))
-    .pipe(gulp.dest('./public/css'));
+    .pipe(gulp.dest('./app/css/index.css'));
 });
 
 gulp.task('sass:watch', function () {
@@ -19,14 +19,14 @@ gulp.task('sass:watch', function () {
 });
 
 gulp.task('webpackdev', function() {
-  return gulp.src('app/js/**/*.js')
+  return gulp.src('./app/js/**/*.js')
     .pipe(webpack({
       output: {
         filename: 'bundle.js'
       }
     }))
     .pipe(uglify())
-    .pipe(gulp.dest('public/'));
+    .pipe(gulp.dest('./public/'));
 });
 
 gulp.task('copy', function() {
@@ -36,10 +36,10 @@ gulp.task('copy', function() {
   };
 
   return gulp.src('app/**/*.html')
-    .pipe(gulp.dest('public/'))
+    .pipe(gulp.dest('./public/'))
     .pipe(minifyHTML(opts))
     .pipe(gulp.dest('./public/'));
 });
 
-gulp.task('build', ['copy', 'sass']);
+gulp.task('build', ['copy', 'sass', 'webpackdev']);
 gulp.task('default', ['build']);

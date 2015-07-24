@@ -1,1 +1,44 @@
-<!DOCTYPE html><html><head><title>Dexter's VLOG page</title><link rel=stylesheet type=text/css href=css/base.css></head><body><header><section><a><img src=http://i.imgur.com/u3lmGxb.png></a><a>About Dexter</a><a>Courses Teaching</a><a>Projects</a><a>More</a></section></header><main><h1>Welcome to my Vlog</h1><h2>Nerd City, USA</h2><article class=container><iframe width=425 height=350 src=https://www.youtube.com/embed/fNtDGQCvKgA></iframe></article><article class=container><iframe width=425 height=350 src=https://www.youtube.com/embed/9cMuV31bsbw></iframe></article></main></body><footer><p>&copy 2015 Dexter's Vlog</p></footer></html>
+<!DOCTYPE html>
+<html data-ng-app="blogPost">
+  <head>
+    <title>Dexter's VLOG page</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+  </head>
+  <body>
+    <header>
+      <section><a><img src="http://i.imgur.com/u3lmGxb.png"></a><a>About Dexter</a><a>Courses Teaching</a><a>Projects</a><a>More</a></section>
+    </header>
+    <main data-ng-controller="postController">
+      <div data-new-setting-directive><div>
+
+      <section data-ng-repeat="post in posts">
+        <article>
+          <h1>{{post.title}}</h1>
+          <p>{{post.blog}}</p>
+        </article>
+        <button data-ng-click="edit(article)">Edit</button>
+        <button data-ng-click="destroy(post._id)">Destroy</button>
+        <section data-ng-if="article.editing">
+          <h1>Editing Article</h1>
+          <label for="title">title:</label>
+          <input id="title" type="text" data-ng-model="article.title" value="{{post.title}}">
+          <button>Cancel</button>
+          <button>Update</button>
+          <!-- <label for="blog">blog:</label>
+          <textarea id="blog" type="text" data-ng-model="article.blog" value="{{post.blog}}"> -->
+      </section>
+      <!-- <h1>Welcome to my Vlog</h1>
+      <h2>Nerd City, USA</h2>
+      <article class="container">
+        <iframe width="425" height="350" src="https://www.youtube.com/embed/fNtDGQCvKgA"></iframe>
+      </article>
+      <article class="container">
+        <iframe width="425" height="350" src="https://www.youtube.com/embed/9cMuV31bsbw"></iframe>
+      </article> -->
+    </main>
+  </body>
+  <footer>
+    <p>&copy 2015 Dexter's Vlog</p>
+  </footer>
+  <script src="bundle.js"></script>
+</html>

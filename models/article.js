@@ -6,5 +6,5 @@ var articleSchema= mongoose.Schema ({
   title: String,
   blog: String
 });
-
-module.exports = mongoose.model('article', articleSchema);
+var article = mongoose.model('article', articleSchema);
+module.exports = article;
