@@ -8,6 +8,7 @@ var port = 3000;
 var routes = require('./routes/routes');
 var jade = require('jade');
 
+require('./routes/routes.js')(app);
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/blog');
 
